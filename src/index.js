@@ -30,9 +30,9 @@ function fibs(num) {
     // otherwise, go through loop
     if (num === 0 || num === 1) {
         // .slice(start, end) is exclusive, not including the end index so +1
-        return fibSequence.slice(0, num + 1); 
+        return fibSequence.slice(0, num + 1);
     }
-    
+
     for (let i = 2; i <= num; i += 1) {
         // get the first previous number (operand 1)
         const firstPrevNum = fibSequence[i - 2];
@@ -42,12 +42,11 @@ function fibs(num) {
 
         // the next number is the sum of the previous two numbers
         // so operand1 + operand2 = next number in fib sequence
-        fibSequence.push(firstPrevNum + secondPrevNum); 
+        fibSequence.push(firstPrevNum + secondPrevNum);
     }
 
     return fibSequence;
 }
-
 
 console.log(fibs(0));
 console.log(fibs(1));
@@ -55,7 +54,130 @@ console.log(fibs(5));
 console.log(fibs(10));
 console.log(fibs(14));
 
-// now do the example of fibonacci but with recursion 
+// now do the example of fibonacci but with recursion
 function fibsRec(num) {
-    
+    const fibSequence = [];
+
+    for (let i = num; i >= 0; i -= 1) {
+        fibSequence.push(calculateFibNum(i));
+    }
+
+    return fibSequence.reverse();
 }
+
+function calculateFibNum(num) {
+    // base case because fib(0) = 0  and fib(1) = 1
+    if (num === 0 || num === 1) {
+        return num;
+    }
+
+    // keep recursing until we get the fib number
+    return calculateFibNum(num - 1) + calculateFibNum(num - 2);
+}
+
+console.log(fibsRec(3));
+console.log(fibsRec(0));
+console.log(fibsRec(1));
+console.log(fibsRec(5));
+console.log(fibsRec(10));
+console.log(fibsRec(14));
+
+// alright, work on merge sort
+/*
+    1.function should take in an unsorted array
+    2.function should return a sorted array after merge sort process
+    using a recursive methodology
+
+    merge sort: separating an unsorted array into smaller 
+    arrays, then sorting them, then "merging" them into 
+    one sorted array.
+
+    pseudocode: 
+    1. sort left side 
+    2. sort right side 
+    3. merge together (in a new array?)
+*/
+function mergeSort(unsortedArr) {
+    // do the beginning split of the array to go through sort process
+    const unsortedArrLength = unsortedArr.length;
+    const leftArr = unsortedArr.slice(0, unsortedArrLength / 2);
+    const rightArr = unsortedArr.slice(
+        unsortedArrLength / 2,
+        unsortedArrLength,
+    );
+
+
+    console.log("STARTING UNSORTED ARRAY: " + unsortedArr);
+    console.log("Left Array : \n" + leftArr);
+    console.log("Right Array: \n" + rightArr);
+
+    // pass left and right halves into their recursive sorting
+    let sortedArr;
+    
+    if (leftArr.length > 1 || rightArr.length > 1) {
+        sortedArr = sort(leftArr, rightArr);
+    }
+
+    /* 
+    once the final left and right halves are sorted, merge them together to get
+    final sorted array and return it.
+    */
+
+    return sortedArr;
+}
+
+function sort(leftArr, rightArr) {
+    /*  if the given array is still not a single element array,
+    then keep recursively splitting the array in half.
+
+    if it IS a single element, it is ready to be merged with 
+    merge() function. Send both arrays to be merged togther
+    and return the merged array.
+    */
+    
+    console.log("passed Left side Array (sort): "+ leftArr);
+    console.log("passed Right side Array (sort): "+ rightArr);
+
+    let newLeftArr;
+    let newRightArr;
+
+    // split if its not a single element array
+    // left side sorting and merging
+    if (leftArr.length > 1) {
+        newLeftArr = leftArr.slice(0, leftArr.length / 2);
+        newRightArr = leftArr.slice(leftArr.length / 2, leftArr.length);
+        sort(newLeftArr, newRightArr);
+    } else {
+        console.log("LEFT SIDE MERGE");
+        return merge(leftArr, rightArr);
+    }
+}
+
+/* 
+given a left and right array, merge them together and return
+a single SORTED new array.
+*/
+function merge(leftArr, rightArr) {
+    let mergedArr;
+
+    console.log(leftArr);
+    console.log(rightArr);
+
+    while(leftArr.length !== 0 && rightArr.length !== 0) {
+        let firstLeftNum = leftArr[0];
+        let firstRightNum = rightArr[0];
+
+        if(firstLeftNum > firstRightNum) {
+            mergedArr.push(firstRightNum);
+            rightArr.shift();
+        } else {
+            mergedArr.push(firstLeftNum);
+            leftArr.shift();
+        }
+    }
+
+    console.log(mergedArr);
+}
+// console.log(mergeSort([3,5,6,7,8]));
+console.log(mergeSort([3, 2, 1, 13, 8, 5, 0, 1]));
+// console.log(mergeSort([105, 79, 100, 110]));
