@@ -23,6 +23,10 @@ import "./style.css";
     and so on...
     every fibonacci sequence starts with 0 and 1 it seems.
 */
+
+console.log(
+    "-------------------THIS IS THE START OF FIBONACCI-------------------",
+);
 function fibs(num) {
     const fibSequence = [0, 1];
 
@@ -97,6 +101,10 @@ console.log(fibsRec(14));
     2. sort right side 
     3. merge together (in a new array?)
 */
+console.log(
+    "-------------------THIS IS THE START OF MERGE SORT-------------------",
+);
+
 function mergeSort(unsortedArr) {
     // do the beginning split of the array to go through sort process
     const unsortedArrLength = unsortedArr.length;
@@ -106,17 +114,12 @@ function mergeSort(unsortedArr) {
         unsortedArrLength,
     );
 
-
     console.log("STARTING UNSORTED ARRAY: " + unsortedArr);
-    console.log("Left Array : \n" + leftArr);
-    console.log("Right Array: \n" + rightArr);
+    console.log("Left Array (starting split): \n" + leftArr);
+    console.log("Right Array (starting split): \n" + rightArr);
 
     // pass left and right halves into their recursive sorting
-    let sortedArr;
-    
-    if (leftArr.length > 1 || rightArr.length > 1) {
-        sortedArr = sort(leftArr, rightArr);
-    }
+    const sortedArr = sort(leftArr, rightArr);
 
     /* 
     once the final left and right halves are sorted, merge them together to get
@@ -134,23 +137,45 @@ function sort(leftArr, rightArr) {
     merge() function. Send both arrays to be merged togther
     and return the merged array.
     */
-    
-    console.log("passed Left side Array (sort): "+ leftArr);
-    console.log("passed Right side Array (sort): "+ rightArr);
 
-    let newLeftArr;
-    let newRightArr;
+    console.log("passed Left side Array (sort): " + leftArr);
+    console.log("passed Right side Array (sort): " + rightArr);
+
+    let newLeftArr_LEFT;
+    let newRightArr_LEFT;
+
+    let newLeftArr_RIGHT;
+    let newRightArr_RIGHT;
+
+    let mergedLeftArr;
+    let mergedRightArr;
 
     // split if its not a single element array
-    // left side sorting and merging
+    // 1. left side sorting and merging
     if (leftArr.length > 1) {
-        newLeftArr = leftArr.slice(0, leftArr.length / 2);
-        newRightArr = leftArr.slice(leftArr.length / 2, leftArr.length);
-        sort(newLeftArr, newRightArr);
+        newLeftArr_LEFT = leftArr.slice(0, leftArr.length / 2);
+        newRightArr_LEFT = leftArr.slice(leftArr.length / 2, leftArr.length);
+        mergedLeftArr = sort(newLeftArr_LEFT, newRightArr_LEFT);
     } else {
         console.log("LEFT SIDE MERGE");
         return merge(leftArr, rightArr);
     }
+
+    // 2. right side sorting and merging
+    if (rightArr.length > 1) {
+        newLeftArr_RIGHT = rightArr.slice(0, rightArr.length / 2);
+        newRightArr_RIGHT = rightArr.slice(
+            rightArr.length / 2,
+            rightArr.length,
+        );
+        mergedRightArr = sort(newLeftArr_RIGHT, newRightArr_RIGHT);
+    } else {
+        console.log("RIGHT SIDE MERGE");
+        return merge(leftArr, rightArr);
+    }
+
+    // 3. merge together
+    return merge(mergedLeftArr, mergedRightArr);
 }
 
 /* 
@@ -158,26 +183,44 @@ given a left and right array, merge them together and return
 a single SORTED new array.
 */
 function merge(leftArr, rightArr) {
-    let mergedArr;
+    const mergedArr = [];
 
-    console.log(leftArr);
-    console.log(rightArr);
+    // copying array because .shift() changes the original array even through reference
+    const tempLeftArr = leftArr.slice();
+    const tempRightArr = rightArr.slice();
 
-    while(leftArr.length !== 0 && rightArr.length !== 0) {
-        let firstLeftNum = leftArr[0];
-        let firstRightNum = rightArr[0];
+    console.log(tempLeftArr);
+    console.log(tempRightArr);
 
-        if(firstLeftNum > firstRightNum) {
+    while (tempLeftArr.length !== 0 || tempRightArr.length !== 0) {
+        const firstLeftNum = tempLeftArr[0];
+        const firstRightNum = tempRightArr[0];
+
+        // check if either array is undefined after loop
+        if (firstLeftNum === undefined && firstRightNum !== undefined) {
             mergedArr.push(firstRightNum);
-            rightArr.shift();
-        } else {
+            tempRightArr.shift();
+        } else if (firstLeftNum !== undefined && firstRightNum === undefined) {
             mergedArr.push(firstLeftNum);
-            leftArr.shift();
+            tempLeftArr.shift();
+        } else if (firstLeftNum > firstRightNum) {
+            // if numbers are NOT undefined, then compare them. Smaller number goes first
+            mergedArr.push(firstRightNum);
+            tempRightArr.shift();
+        } else if (firstLeftNum < firstRightNum) {
+            mergedArr.push(firstLeftNum);
+            tempLeftArr.shift();
+        } else if (firstLeftNum === firstRightNum) {
+            // if the numbers found are the same, just push the left one by default
+            mergedArr.push(firstLeftNum);
+            tempLeftArr.shift();
         }
     }
 
-    console.log(mergedArr);
+    console.log("Merged Array: " + mergedArr);
+
+    return mergedArr;
 }
 // console.log(mergeSort([3,5,6,7,8]));
-console.log(mergeSort([3, 2, 1, 13, 8, 5, 0, 1]));
-// console.log(mergeSort([105, 79, 100, 110]));
+// console.log(mergeSort([3, 2, 1, 13, 8, 5, 0, 1]));
+console.log(mergeSort([105, 79, 100, 110]));
