@@ -121,11 +121,6 @@ function mergeSort(unsortedArr) {
     // pass left and right halves into their recursive sorting
     const sortedArr = sort(leftArr, rightArr);
 
-    /* 
-    once the final left and right halves are sorted, merge them together to get
-    final sorted array and return it.
-    */
-
     return sortedArr;
 }
 
@@ -156,8 +151,11 @@ function sort(leftArr, rightArr) {
         newLeftArr_LEFT = leftArr.slice(0, leftArr.length / 2);
         newRightArr_LEFT = leftArr.slice(leftArr.length / 2, leftArr.length);
         mergedLeftArr = sort(newLeftArr_LEFT, newRightArr_LEFT);
-    } else {
-        console.log("LEFT SIDE MERGE");
+    } else if(leftArr.length <= 1 && rightArr.length > 1) {
+        mergedLeftArr = leftArr.slice();
+    }
+    else {
+        console.log("LEFT SIDE MERGE RETURNED");
         return merge(leftArr, rightArr);
     }
 
@@ -169,7 +167,10 @@ function sort(leftArr, rightArr) {
             rightArr.length,
         );
         mergedRightArr = sort(newLeftArr_RIGHT, newRightArr_RIGHT);
-    } else {
+    } else if(rightArr.length <= 1 && leftArr.length > 1) {
+        mergedRightArr = rightArr.slice();
+    } 
+    else {
         console.log("RIGHT SIDE MERGE");
         return merge(leftArr, rightArr);
     }
@@ -223,4 +224,6 @@ function merge(leftArr, rightArr) {
 }
 // console.log(mergeSort([3,5,6,7,8]));
 // console.log(mergeSort([3, 2, 1, 13, 8, 5, 0, 1]));
-console.log(mergeSort([105, 79, 100, 110]));
+// console.log(mergeSort([105, 79, 100, 110]));
+
+console.log(mergeSort([3, 1, -1]));
