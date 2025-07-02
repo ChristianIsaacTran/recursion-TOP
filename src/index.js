@@ -52,11 +52,11 @@ function fibs(num) {
     return fibSequence;
 }
 
-console.log(fibs(0));
-console.log(fibs(1));
-console.log(fibs(5));
-console.log(fibs(10));
-console.log(fibs(14));
+// console.log(fibs(0));
+// console.log(fibs(1));
+// console.log(fibs(5));
+// console.log(fibs(10));
+// console.log(fibs(14));
 
 // now do the example of fibonacci but with recursion
 function fibsRec(num) {
@@ -70,7 +70,6 @@ function fibsRec(num) {
 }
 
 function calculateFibNum(num) {
-    console.log("THIS WAS PRINTED RECURSIVELY!!");
     // base case because fib(0) = 0  and fib(1) = 1
     if (num === 0 || num === 1) {
         return num;
@@ -80,12 +79,14 @@ function calculateFibNum(num) {
     return calculateFibNum(num - 1) + calculateFibNum(num - 2);
 }
 
-console.log(fibsRec(3));
-console.log(fibsRec(0));
-console.log(fibsRec(1));
-console.log(fibsRec(5));
-console.log(fibsRec(10));
-console.log(fibsRec(14));
+// console.log(fibsRec(3));
+// console.log(fibsRec(0));
+// console.log(fibsRec(1));
+// console.log(fibsRec(5));
+// console.log(fibsRec(10));
+// console.log(fibsRec(14));
+
+console.log(fibsRec(8));
 
 // alright, work on merge sort
 /*
@@ -152,10 +153,9 @@ function sort(leftArr, rightArr) {
         newLeftArr_LEFT = leftArr.slice(0, leftArr.length / 2);
         newRightArr_LEFT = leftArr.slice(leftArr.length / 2, leftArr.length);
         mergedLeftArr = sort(newLeftArr_LEFT, newRightArr_LEFT);
-    } else if(leftArr.length <= 1 && rightArr.length > 1) {
+    } else if (leftArr.length <= 1 && rightArr.length > 1) {
         mergedLeftArr = leftArr.slice();
-    }
-    else {
+    } else {
         console.log("LEFT SIDE MERGE RETURNED");
         return merge(leftArr, rightArr);
     }
@@ -168,10 +168,9 @@ function sort(leftArr, rightArr) {
             rightArr.length,
         );
         mergedRightArr = sort(newLeftArr_RIGHT, newRightArr_RIGHT);
-    } else if(rightArr.length <= 1 && leftArr.length > 1) {
+    } else if (rightArr.length <= 1 && leftArr.length > 1) {
         mergedRightArr = rightArr.slice();
-    } 
-    else {
+    } else {
         console.log("RIGHT SIDE MERGE");
         return merge(leftArr, rightArr);
     }
