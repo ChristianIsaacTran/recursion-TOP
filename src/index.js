@@ -1,6 +1,6 @@
 /* eslint-disable no-magic-numbers */
 // turned off eslinting for magic-numbers because I am defining beginning numbers in the array
-import "./style.css";
+// import "./style.css";
 
 /*
     doing fibonacci sequence first according to project directions
@@ -70,6 +70,7 @@ function fibsRec(num) {
 }
 
 function calculateFibNum(num) {
+    console.log("THIS WAS PRINTED RECURSIVELY!!");
     // base case because fib(0) = 0  and fib(1) = 1
     if (num === 0 || num === 1) {
         return num;
@@ -223,7 +224,7 @@ function merge(leftArr, rightArr) {
     return mergedArr;
 }
 // console.log(mergeSort([3,5,6,7,8]));
-// console.log(mergeSort([3, 2, 1, 13, 8, 5, 0, 1]));
-// console.log(mergeSort([105, 79, 100, 110]));
+console.log(mergeSort([3, 2, 1, 13, 8, 5, 0, 1]));
+console.log(mergeSort([105, 79, 100, 110]));
 
-console.log(mergeSort([3, 1, -1]));
+// console.log(mergeSort([3, 1, -1]));
